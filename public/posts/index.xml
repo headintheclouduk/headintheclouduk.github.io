@@ -2,11 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Head In The Cloud</title>
-    <link>https://blog.headinthecloud.uk/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Head In The Cloud</description>
     <generator>Hugo</generator>
     <language>en-uk</language>
-    <lastBuildDate></lastBuildDate>
-    <atom:link href="https://blog.headinthecloud.uk/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 24 Mar 2025 21:45:12 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Deploying Azure Local 23h2</title>
+      <link>http://localhost:1313/posts/deploying-azure-local-23h2/</link>
+      <pubDate>Mon, 24 Mar 2025 21:45:12 +0000</pubDate>
+      <guid>http://localhost:1313/posts/deploying-azure-local-23h2/</guid>
+      <description>&lt;p&gt;##Introduction&lt;/p&gt;&#xA;&lt;p&gt;This is &lt;strong&gt;bold&lt;/strong&gt; text, and this is &lt;em&gt;emphasized&lt;/em&gt; text.&lt;/p&gt;&#xA;&lt;p&gt;Visit the &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; website!&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>
