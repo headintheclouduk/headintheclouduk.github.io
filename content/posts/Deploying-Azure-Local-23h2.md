@@ -1,6 +1,6 @@
 +++
 date = '2025-03-24T21:45:12Z'
-draft = false
+draft = true
 title = 'Deploying Azure Local 23h2'
 +++
 
