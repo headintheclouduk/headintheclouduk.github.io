@@ -4,7 +4,7 @@
     min = "0.128.0"
 [params]
 avatar = "/images/my_avatar.png"
-favicon = "images/hitc_logo.png"
+favicon = "/images/my_avatar.png"
   [[params.social]]
   icon = "brand-github"
   name = "Github"
