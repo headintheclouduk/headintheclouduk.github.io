@@ -1,0 +1,5 @@
+.hugo_build.lock
+themes/m10c/public/
+themes/m10c/exampleSite/resources/
+themes/m10c/.hugo_build.lock
+themes/m10c/node_modules/

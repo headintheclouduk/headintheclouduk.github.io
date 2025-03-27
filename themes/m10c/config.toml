@@ -5,6 +5,7 @@
 [params]
 avatar = "/images/my_avatar.png"
 favicon = "/images/my_avatar.png"
+description = "Sharing my knowledge via this blog."
   [[params.social]]
   icon = "brand-github"
   name = "Github"
