@@ -1,0 +1,15 @@
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.128.0"
+[params]
+avatar = "/images/my_avatar.png"
+favicon = "images/hitc_logo.png"
+  [[params.social]]
+  icon = "brand-github"
+  name = "Github"
+  url = "https://github.com/headintheclouduk"
+  [[params.social]]
+  icon = "brand-linkedin"
+  name = "Linkedin"
+  url = "https://www.linkedin.com/in/oliverbates/"
