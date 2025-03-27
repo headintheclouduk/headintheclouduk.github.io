@@ -3,6 +3,7 @@
     extended = true
     min = "0.128.0"
 [params]
+author = "Oliver Bates"
 avatar = "/images/my_avatar.png"
 favicon = "/images/my_avatar.png"
 description = "Sharing my knowledge via this blog."
