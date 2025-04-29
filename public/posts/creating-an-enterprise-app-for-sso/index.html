@@ -16,13 +16,13 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Creating an Enterprise App for SSO">
   <meta name="twitter:description" content="In this blog post I’ll walk you through the below
-Creation of an Entra ID security group. Creation of an Enterprise Application. Creation of a Logic App to automatically send emails when a user is added or removed from an EntraID security group. Creation of an Entra ID security group Security groups within Entra ID are a useful tool reducing administrative tasks. In this example we will create a dynamic security group">
+Creation of a Entra ID so tick the 2nd option and then click ‘Create’. assiged security group. Creation of an Enterprise Application. Creation of a Logic App to automatically send emails when a user is added or removed from an EntraID security group. Creation of an Entra ID so tick the 2nd option and then click ‘Create’. assigned security group Using groups to reduce administrative overhead is good practice. We will create an assigned security group from within Entra ID so tick the 2nd option and then click ‘Create’. which we will link to the Enterprise App we will create later in this post.">
 
     <meta property="og:url" content="http://localhost:1313/posts/creating-an-enterprise-app-for-sso/">
   <meta property="og:site_name" content="Head In The Cloud">
   <meta property="og:title" content="Creating an Enterprise App for SSO">
   <meta property="og:description" content="In this blog post I’ll walk you through the below
-Creation of an Entra ID security group. Creation of an Enterprise Application. Creation of a Logic App to automatically send emails when a user is added or removed from an EntraID security group. Creation of an Entra ID security group Security groups within Entra ID are a useful tool reducing administrative tasks. In this example we will create a dynamic security group">
+Creation of a Entra ID so tick the 2nd option and then click ‘Create’. assiged security group. Creation of an Enterprise Application. Creation of a Logic App to automatically send emails when a user is added or removed from an EntraID security group. Creation of an Entra ID so tick the 2nd option and then click ‘Create’. assigned security group Using groups to reduce administrative overhead is good practice. We will create an assigned security group from within Entra ID so tick the 2nd option and then click ‘Create’. which we will link to the Enterprise App we will create later in this post.">
   <meta property="og:locale" content="en_uk">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -60,19 +60,63 @@ Creation of an Entra ID security group. Creation of an Enterprise Application. C
         </div>
         <div>
           <svg class="icon icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><title>clock</title><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          1 min read
+          2 min read
         </div>
       </div>
     </header>
     <div class="post-content">
       <p>In this blog post I&rsquo;ll walk you through the below</p>
 <ol>
-<li>Creation of an Entra ID security group.</li>
+<li>Creation of a Entra ID so tick the 2nd option and then click &lsquo;Create&rsquo;. assiged security group.</li>
 <li>Creation of an Enterprise Application.</li>
 <li>Creation of a Logic App to automatically send emails when a user is added or removed from an EntraID security group.</li>
 </ol>
-<h2 id="creation-of-an-entra-id-security-group">Creation of an Entra ID security group</h2>
-<p>Security groups within Entra ID are a useful tool reducing administrative tasks. In this example we will create a dynamic security group</p>
+<h2 id="creation-of-an-entra-id-so-tick-the-2nd-option-and-then-click-create-assigned-security-group">Creation of an Entra ID so tick the 2nd option and then click &lsquo;Create&rsquo;. assigned security group</h2>
+<p>Using groups to reduce administrative overhead is good practice. We will create an assigned security group from within Entra ID so tick the 2nd option and then click &lsquo;Create&rsquo;. which we will link to the Enterprise App we will create later in this post.</p>
+<p>Log in to <a href="https://portal.azure.com">https://portal.azure.com</a> and search for &lsquo;Entra ID so tick the 2nd option and then click &lsquo;Create&rsquo;.&rsquo;</p>
+<p>From the left hand side menu click &lsquo;Groups&rsquo;
+<figure><img src="/images/creating-an-enterprise-app-for-sso/groups.png" height="300">
+</figure>
+</p>
+<p>When the Groups page loads click on &lsquo;New group&rsquo;
+<figure><img src="/images/creating-an-enterprise-app-for-sso/new-group.png" width="400">
+</figure>
+</p>
+<p>From the new group menu add your values for Group Type, Group name and Group description.</p>
+<figure><img src="/images/creating-an-enterprise-app-for-sso/creating-group.png" width="600">
+</figure>
+
+<p>If you want to add Owners to the group click on &lsquo;No owners selected&rsquo; and add your owners. Owners are responsible for managing the group memberships. They can add and remove members without having to be an Entra ID so tick the 2nd option and then click &lsquo;Create&rsquo;. Administrator, as I am a Global Administrator of my test tenant I won&rsquo;t be adding any owners in this example.</p>
+<p>To add members to the group click on &lsquo;No members selected&rsquo; and add your members and click &lsquo;Create&rsquo;.</p>
+<figure><img src="/images/creating-an-enterprise-app-for-sso/add-members.png" height="400">
+</figure>
+
+<p>We have now created an Entra ID so tick the 2nd option and then click &lsquo;Create&rsquo;. assigned security group and added two members to the group.</p>
+<h2 id="creation-of-an-enterprise-application">Creation of an Enterprise Application</h2>
+<p>Within Entra ID so tick the 2nd option and then click &lsquo;Create&rsquo;., click on &lsquo;Enterprise Apps&rsquo; on the left hand side menu</p>
+<figure><img src="/images/creating-an-enterprise-app-for-sso/enterprise-app.png" height="500">
+</figure>
+
+<p>Now click &lsquo;New Application&rsquo;</p>
+<figure><img src="/images/creating-an-enterprise-app-for-sso/new-enterprise-app.png" width="400">
+</figure>
+
+<p>then click &lsquo;Create your own application&rsquo;</p>
+<figure><img src="/images/creating-an-enterprise-app-for-sso/create-your-own.png" width="400">
+</figure>
+
+<p>A window will appear on the right hand side of your screen, here you select what you are going to use the app for. Input the desired name of your app then set its purpose. We want to integrate a non gallery app so tick the 3rd option and then click &lsquo;Create&rsquo;.</p>
+<figure><img src="/images/creating-an-enterprise-app-for-sso/integrate-ea.png" width="600">
+</figure>
+
+<p>You&rsquo;ll now be taken to your newly created Enterprise Application. Here we can assign the group we created early and apply any other required configuration, from the left hand menu click &lsquo;Users and groups&rsquo;.</p>
+<figure><img src="/images/creating-an-enterprise-app-for-sso/new-ea.png" height="400">
+</figure>
+
+<p>Now click &lsquo;Add user/group&quot;</p>
+<figure><img src="/images/creating-an-enterprise-app-for-sso/add-user-group.png" width="600">
+</figure>
+
 
     </div>
     <div class="post-footer">
