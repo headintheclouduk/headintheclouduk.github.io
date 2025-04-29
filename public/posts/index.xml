@@ -2,11 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Head In The Cloud</title>
-    <link>https://blog.headinthecloud.uk/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Head In The Cloud</description>
     <generator>Hugo</generator>
     <language>en-uk</language>
-    <lastBuildDate></lastBuildDate>
-    <atom:link href="https://blog.headinthecloud.uk/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 29 Apr 2025 08:58:03 +0100</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Creating an Enterprise App for SSO</title>
+      <link>http://localhost:1313/posts/creating-an-enterprise-app-for-sso/</link>
+      <pubDate>Tue, 29 Apr 2025 08:58:03 +0100</pubDate>
+      <guid>http://localhost:1313/posts/creating-an-enterprise-app-for-sso/</guid>
+      <description>&lt;p&gt;In this blog post I&amp;rsquo;ll walk you through the below&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Creation of an Entra ID security group.&lt;/li&gt;&#xA;&lt;li&gt;Creation of an Enterprise Application.&lt;/li&gt;&#xA;&lt;li&gt;Creation of a Logic App to automatically send emails when a user is added or removed from an EntraID security group.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;creation-of-an-entra-id-security-group&#34;&gt;Creation of an Entra ID security group&lt;/h2&gt;&#xA;&lt;p&gt;Security groups within Entra ID are a useful tool reducing administrative tasks. In this example we will create a dynamic security group&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Deploying Azure Local 23H2 via the Azure Portal</title>
+      <link>http://localhost:1313/posts/deploying-azure-local-23h2/</link>
+      <pubDate>Mon, 24 Mar 2025 21:45:12 +0000</pubDate>
+      <guid>http://localhost:1313/posts/deploying-azure-local-23h2/</guid>
+      <description>&lt;p&gt;Recently I had the task of deploying an Azure Local 23H2 cluster and when searching for a clear &amp;ldquo;how to&amp;rdquo; stumbled across many outdated deployment guides and a rabbit warren of Microsoft Learn links so here i&amp;rsquo;m writing this for anyone like my past self who would have saved hours of time if i&amp;rsquo;d had a guide like this to read pre-deployment.&lt;/p&gt;&#xA;&lt;p&gt;In this post I am assuming that you know how to install a Windows OS and how to install firmware and drivers.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>

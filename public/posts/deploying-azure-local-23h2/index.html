@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-uk">
   <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <title>Deploying Azure Local 23h2 // Head In The Cloud</title>
+    <title>Deploying Azure Local 23H2 via the Azure Portal // Head In The Cloud</title>
     <link rel="shortcut icon" href="/images/my_avatar.png" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.145.0">
@@ -14,17 +14,15 @@
     
     
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Deploying Azure Local 23h2">
-  <meta name="twitter:description" content="##Introduction
-This is bold text, and this is emphasized text.
-Visit the Hugo website!">
+  <meta name="twitter:title" content="Deploying Azure Local 23H2 via the Azure Portal">
+  <meta name="twitter:description" content="Recently I had the task of deploying an Azure Local 23H2 cluster and when searching for a clear “how to” stumbled across many outdated deployment guides and a rabbit warren of Microsoft Learn links so here i’m writing this for anyone like my past self who would have saved hours of time if i’d had a guide like this to read pre-deployment.
+In this post I am assuming that you know how to install a Windows OS and how to install firmware and drivers.">
 
     <meta property="og:url" content="http://localhost:1313/posts/deploying-azure-local-23h2/">
   <meta property="og:site_name" content="Head In The Cloud">
-  <meta property="og:title" content="Deploying Azure Local 23h2">
-  <meta property="og:description" content="##Introduction
-This is bold text, and this is emphasized text.
-Visit the Hugo website!">
+  <meta property="og:title" content="Deploying Azure Local 23H2 via the Azure Portal">
+  <meta property="og:description" content="Recently I had the task of deploying an Azure Local 23H2 cluster and when searching for a clear “how to” stumbled across many outdated deployment guides and a rabbit warren of Microsoft Learn links so here i’m writing this for anyone like my past self who would have saved hours of time if i’d had a guide like this to read pre-deployment.
+In this post I am assuming that you know how to install a Windows OS and how to install firmware and drivers.">
   <meta property="og:locale" content="en_uk">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -54,7 +52,7 @@ Visit the Hugo website!">
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">Deploying Azure Local 23h2</h1>
+      <h1 class ="post-title">Deploying Azure Local 23H2 via the Azure Portal</h1>
       <div class="post-meta">
         <div>
           <svg class="icon icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><title>calendar</title><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
@@ -62,14 +60,156 @@ Visit the Hugo website!">
         </div>
         <div>
           <svg class="icon icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><title>clock</title><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          1 min read
+          7 min read
         </div>
       </div>
     </header>
     <div class="post-content">
-      <p>##Introduction</p>
-<p>This is <strong>bold</strong> text, and this is <em>emphasized</em> text.</p>
-<p>Visit the <a href="https://gohugo.io">Hugo</a> website!</p>
+      <p>Recently I had the task of deploying an Azure Local 23H2 cluster and when searching for a clear &ldquo;how to&rdquo; stumbled across many outdated deployment guides and a rabbit warren of Microsoft Learn links so here i&rsquo;m writing this for anyone like my past self who would have saved hours of time if i&rsquo;d had a guide like this to read pre-deployment.</p>
+<p>In this post I am assuming that you know how to install a Windows OS and how to install firmware and drivers.</p>
+<h1 id="useful-links">Useful Links</h1>
+<p>Here are a bunch of useful links to MS Learn articles to start your search if for any reason your deployment needs to different from what I describe.</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/azure-local/deploy/deployment-prep-active-directory?view=azloc-24113">Preparing AD</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/azure-local/deploy/deployment-install-os?view=azloc-24113#prerequisites">Install Azure Local 23H2</a></li>
+</ul>
+<h1 id="preparing-active-directory">Preparing Active Directory</h1>
+<p>The first step is to prepare AD for the upcoming Azure Local deployment. Microsoft have kindly created a PowerShell module to make this step simple. Below I detail each step required for the AD preperation.</p>
+<p>Lets start by installing the required PowerShell modules.</p>
+<p>On a computer that is joined to your AD Domain open PowerShell as Administrator and run the below commands</p>
+<pre tabindex="0"><code>Install-Module AsHciADArtifactsPreCreationTool -Repository PSGallery -Force
+</code></pre><blockquote>
+<p>If you have installed a previous version of the AsHciADArtifactsPreCreationTool module make sure to uninstall any previous versions of the module.</p></blockquote>
+<p>Once the modules have been installed we then need to import the module.</p>
+<pre tabindex="0"><code>Import-Module AsHciADArtifactsPreCreationTool
+</code></pre><p>Now we have the required module installed lets build the command that will do the AD preparation for us, there is only 1 part of the command that requires customisation and that is <strong>&ldquo;OU=<!-- raw HTML omitted -->,DC=<!-- raw HTML omitted -->,DC=<!-- raw HTML omitted -->&rdquo;</strong> here you need to specify which OU you would like the Azure Local cluster to be deployed into.</p>
+<pre tabindex="0"><code>New-HciAdObjectsPreCreation -AzureStackLCMUserCredential (Get-Credential) -AsHCIOUName &#34;OU=&lt;OU&gt;,DC=&lt;domain&gt;,DC=&lt;com&gt;&#34;
+</code></pre><blockquote>
+<ul>
+<li>The -AsHCIOUName path does not support any of the following special characters &amp;,&quot;,&rsquo;,&lt;,&gt;</li>
+<li>Once the deployment is complete, moving the computer objects to a different OU is not supported.</li>
+</ul></blockquote>
+<p>You will be prompted to enter credentials, enter the username and password for the deployment.</p>
+<blockquote>
+<ul>
+<li>Make sure the username is no longer than 64 characters and only contains leters, numbers, hyphens and underscores, it cannot start with a hyphen or a number.</li>
+<li>Make sure the password meets complexity and length requirements.</li>
+</ul></blockquote>
+<p>Open AD and confirm the OU has been created, the OU will contain the new Lifecycle Manager (LCM) deployment user account and will have inheritance blocked by default.</p>
+<h1 id="create-required-pre-requisite-azure-resources">Create required pre-requisite Azure resources</h1>
+<p>Ahead of configure the cluster nodes we need to create a few resources in Azure to ensure a smooth Arc regisitration.</p>
+<p>We will require:</p>
+<ul>
+<li>1 x Resource Group</li>
+<li>1 x Storage Account to host the quorum witness</li>
+</ul>
+<p>I will go through te creation of the storage account as their are specific requirements, I&rsquo;m assuming you have the existing knowledge to create a resource group.</p>
+<h1 id="storage-account-creation">Storage Account creation</h1>
+<p>Start the creation of a storage account via the Azure portal. public access must be enabled (unless you&rsquo;re connecting via a private endpoint however this guide will not cover that).</p>
+<h2 id="insert-screenshot">INSERT SCREENSHOT</h2>
+<h1 id="configuring-azure-local-23h2-ready-for-deployment">Configuring Azure Local 23H2 ready for deployment</h1>
+<p>The first thing I do after installing the OS is not required but makes life easier in the future is to rename your NICs. As part of the cluster deployment you will need to select the relevant NICs via the Azure portal, this is much easier when your NICs are named for there purpose instead of being named &ldquo;Port#1&rdquo;, &ldquo;Port#2&rdquo;, etc.</p>
+<p>I was working with 3 pairs of NICs and named them as shown below, note if you don&rsquo;t know already, here is where you need to decide which physical NIC will be connected to what.</p>
+<pre tabindex="0"><code>Rename-NetAdapter -Name &#34;Port3&#34; -NewName &#34;Storage&#34;
+Rename-NetAdapter -Name &#34;Port4&#34; -NewName &#34;Storage1&#34;
+Rename-NetAdapter -Name &#34;Port5&#34; -NewName &#34;Compute&#34;
+Rename-NetAdapter -Name &#34;Port6&#34; -NewName &#34;Compute1&#34;
+Rename-NetAdapter -Name &#34;Port7&#34; -NewName &#34;Management&#34;
+Rename-NetAdapter -Name &#34;Port8&#34; -NewName &#34;Management1&#34;
+</code></pre><p>We can confirm this has worked by running &lsquo;get-netadapter&rsquo; and the new names should be displayed in the &ldquo;Name&rdquo; column.</p>
+<p><strong>INSERT SCREENSHOT HERE</strong></p>
+<p>Now we can easily identify the role of each NIC lets configure the management interface.</p>
+<h2 id="set-managment-team-ip-configuration">Set Managment Team IP Configuration</h2>
+<p>When deploying Azure 23H2 via the Azure portal, NIC teaming is done at the deployment stage, however our servers need to connect to Azure for a successful deployment therefore require an IP address, lets set one now.</p>
+<p>To set the IP address via cli we use &lsquo;New-NetIPAddress&rsquo;. In the example below we will set the NIC with the alias &ldquo;Management&rdquo; to have an IP address of 10.0.0.1, a subnet mask of 255.255.255.0 which in CIDR notation is /24 and a default gateway of 10.0.0.254, I&rsquo;m using a /24 in this example for ease of demonstration, set your subnet size according to your personal requirements.</p>
+<pre tabindex="0"><code>New-NetIPAddress -InterfaceAlias &#34;Management&#34; -IPAddress &#34;10.0.0.10&#34; -PrefixLength 24 -DefaultGateway &#34;10.0.0.254&#34;
+</code></pre><p>we can set the DNS servers with the below command</p>
+<pre tabindex="0"><code>Set-DNSClientServerAddress - InterfaceAlias &#34;Management&#34; -ServerAddress &#34;10.0.1.10&#34;,&#34;10.0.1.11&#34;
+</code></pre><p>To check all the config has applied run &lsquo;ipconfig /all&rsquo; you can also ping the gateway and ensure you get an icmp reply.</p>
+<h2 id="configure-time-settings">Configure time settings</h2>
+<p>To ensure the OS you have just installed is in sync with the domain you will be joining as part of the deployment process we will manually set the time settings. These settings will be overridden upon domain join, however its vital the servers are in the correct time zone etc pre-deployment.</p>
+<p>Run the below commands to set your time servers manually, In my example the 2 servers specificed are domain controllers so they act as DNS and time servers.</p>
+<pre tabindex="0"><code>#Configure time
+w32tm /config /manualpeerlist:&#34;10.0.1.10,10.0.32.11&#34; /syncfromflags:manual /update
+
+#Confirm time
+w32tm /query /status
+</code></pre><h2 id="enable-rdp">Enable RDP</h2>
+<p>So we can manage the cluster nodes via RDP post cluster deployment lets enable RDP. The easiest way of doing this is via sconfig.</p>
+<p>From the sconfig menu select option 7</p>
+<h1 id="insert-screenshot-here">INSERT SCREENSHOT HERE</h1>
+<p>Then type &rsquo;e&rsquo; and &lsquo;1&rsquo;</p>
+<h1 id="insert-screenshot-here-1">INSERT SCREENSHOT HERE</h1>
+<h2 id="change-computer-name">Change computer name</h2>
+<p>The final step in the host configuration pre arc registration is change the hostname of the computer, we do this step last as it requires a reboot to take effect. We can also do this via sconfig.</p>
+<p>From the sconfig menu select option 2</p>
+<h1 id="insert-screenshot-here-2">INSERT SCREENSHOT HERE</h1>
+<p>Now input the new name for the computer. and type Y and hit enter to restart the server.</p>
+<h1 id="insert-screenshot-here-3">INSERT SCREENSHOT HERE</h1>
+<h2 id="register-each-node-with-azure-arc">Register each node with Azure Arc</h2>
+<p>Each node needs to be registered with Arc for Azure to be aware of the servers pre-deployment. To register each server we need to run a registration script detailed below.</p>
+<pre tabindex="0"><code class="language-Define" data-lang="Define">$Subscription = &#34;&lt;SUBSCRIPTION ID&gt;&#34;
+
+#Define the resource group where you want to to register your machine as an Arc device
+$RG = &#34;&lt;RESOURCE GROUP NAME&gt;&#34;
+
+#Define the region to use to register your server as an Arc device
+#Do not use spaces or capital letters when defining a region
+$Region = &#34;westeurope&#34;
+
+#Define the tenant you will use to register your machine as an Arc device
+$Tenant = &#34;&lt;TENANT ID&gt;&#34;
+
+#Define the proxy address if your Azure local deployment accesses the internet via a proxy, if not skip setting the $proxyServer variable
+$proxyServer = &#34;http://proxyaddress:port&#34;
+
+#Connect to your Azure account and subscription
+Connect-AzAccount -SubscriptionId $Subscription -TenantId $Tenant -DeviceCode
+
+#Get the access token for the registration
+$ARMToken = (Get-AzAccessToken -WarningAction SilentlyContinue).Token
+
+#Get the account ID for the registration
+$id = (Get-AzContext).Account.Id
+
+#Invoke the registration script
+Invoke-AzStackHciArcInitialization -SubscriptionID $Subscription -ResourceGroup $RG -TenantID $Tenant -Region $Region -Cloud &#34;AzureCloud&#34; -ArmAccessToken $ARMtoken -AccountID $id
+</code></pre><p>The cli will keep regreshing as the server goes throigh all the required steps until it reaches</p>
+<h2 id="insert-screenshot-1">INSERT SCREENSHOT</h2>
+<p>It will then trigger a log collecton</p>
+<h2 id="insert-screenshot-2">INSERT SCREENSHOT</h2>
+<p>exit upon completion, within the RG you created earlier you&rsquo;ll be able to see the registered server</p>
+<h2 id="insert-screenshot-3">INSERT SCREENSHOT</h2>
+<p>The mandatory Azure extensions will be installed on your machine</p>
+<h2 id="insert-screenshot-4">INSERT SCREENSHOT</h2>
+<h1 id="cluster-deployment">Cluster deployment</h1>
+<p>We&rsquo;ve now completed all the pre-requisites for the cluster deployment, within the Azure portal search for &ldquo;Azure Arc&rdquo;. Within Azure Arc &gt; Host environmnets &gt; Azure Local &gt; Deploy Local</p>
+<h2 id="insert-screenshot-5">INSERT SCREENSHOT</h2>
+<p>Select your subscription and resource group</p>
+<h2 id="insert-screenshot-6">INSERT SCREENSHOT</h2>
+<p>Choose your instance name (name of cluster) and its region</p>
+<h2 id="insert-screenshot-7">INSERT SCREENSHOT</h2>
+<p>Select the nodes you want to form the cluser and validate each nodes cluster</p>
+<h2 id="insert-screenshot-8">INSERT SCREENSHOT</h2>
+<p>Select the keyvault you created earlier and click &lsquo;Next: Configuration&rsquo;</p>
+<h2 id="insert-screenshot-9">INSERT SCREENSHOT</h2>
+<p>Select &lsquo;New configuration&rsquo;. We are deploying a cluster with switchless storage so we need to select &rsquo;no switch for storage&rsquo; this means you have to have direct connections between the 2 servers.</p>
+<h2 id="insert-screenshot-10">INSERT SCREENSHOT</h2>
+<p>We need to map out network traffic types by intent so we select custom configuration</p>
+<h2 id="insert-screenshot-11">INSERT SCREENSHOT</h2>
+<p>Create your intents, in this example I have split each intent into a seperate NIC team</p>
+<h2 id="insert-screenshot-12">INSERT SCREENSHOT</h2>
+<p>For the Management intent ensure RDMA is disabled.</p>
+<h2 id="insert-screenshot-13">INSERT SCREENSHOT</h2>
+<p>Specifiy your IP configuration and validate the subnet</p>
+<h2 id="insert-screenshot-14">INSERT SCREENSHOT</h2>
+<p>Specify all the AD information you prepped earlier</p>
+<h2 id="insert-screenshot-15">INSERT SCREENSHOT</h2>
+<p>Click &lsquo;Customised security settings&rsquo; and click the 7th security option in addition to the 6 security defaults.</p>
+<h2 id="insert-screenshot-16">INSERT SCREENSHOT</h2>
+<p>Create workload volumes as well as infrastructure volumes</p>
+<h2 id="insert-screenshot-17">INSERT SCREENSHOT</h2>
+<p>Add the relevant tags</p>
 
     </div>
     <div class="post-footer">
