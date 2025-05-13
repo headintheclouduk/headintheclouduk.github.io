@@ -1,0 +1,31 @@
+{{/*
+Shortcode: resized-img
+Usage:
+{{< resized-img src="image.jpg" alt="My image" width="600" height="400">}}
+    or:
+    {{< resized-img src="image.jpg" width="800">}}
+        or:
+        {{< resized-img src="image.jpg" height="500">}}
+            */}}
+
+            {{ $src := .Get "src" }}
+            {{ $alt := .Get "alt" | default "" }}
+            {{ $width := .Get "width" }}
+            {{ $height := .Get "height" }}
+
+            {{ with .Page.Resources.GetMatch (printf "*%s" $src) }}
+            {{ $resizeParam := "" }}
+            {{ if and $width $height }}
+            {{ $resizeParam = printf "%sx%s" $width $height }}
+            {{ else if $width }}
+            {{ $resizeParam = printf "%sx" $width }}
+            {{ else if $height }}
+            {{ $resizeParam = printf "x%s" $height }}
+            {{ end }}
+
+            {{ $resized := .Resize $resizeParam }}
+            <img src="{{ $resized.RelPermalink }}" alt="{{ $alt }}" width="{{ $resized.Width }}"
+                height="{{ $resized.Height }}">
+            {{ else }}
+            <p style="color:red;">Image not found: {{ $src }}</p>
+            {{ end }}
