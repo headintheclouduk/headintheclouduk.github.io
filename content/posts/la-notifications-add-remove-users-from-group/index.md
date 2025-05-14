@@ -1,11 +1,20 @@
 +++
 date = '2025-05-13T21:33:59+01:00'
 draft = true
-title = 'La Notifications Add Remove Users From Group'
+title = 'Automate email notifications when adding/removing users to a group using a Logic app'
 +++
 
 > **NOTE:** output is not perfectly refined it displays a key value pair e.g {"email":"joe.bloggs@email.com"} with a blank key, however, this met my desired outcome, when I have time I will refine and update this post.
 
+# Prerequisites
+
+You will need the following to implement this Logic app.
+
+1. A resource group or permissions to create a new resource group
+2. A storage account or permissions to create a storage account
+3. Permissions to write to the storage account
+
+# Steps
 
 Log in to [portal.azure.com](https://portal.azure.com), search for and click on 'Logic app'.
 
@@ -17,7 +26,7 @@ Click Add.
 
 {{< resized-img src="add-la.png" height="150">}}
 
-Tick the Multi-tenant option within "Consumption" and click select.
+Tick the Multi-tenant option within 'Consumption' and click 'Select'.
 
 {{< resized-img src="select-consumption.png" height="400">}}
 
@@ -92,7 +101,13 @@ Now add a Parse JSON action, we'll use this action to parse the output of our pr
 
 |                    |                    |
 |--------------------|--------------------|
-|**Content:**        | body('get-group-members')?['value'] |
+|**Content:**        | *body('get-group-members')?['value']* |
+
+> **IMPORTANT!** When adding the content value you need to add it as a function by clicking on the fx button that appears when you click in the Content box. I will *italisise* everything that needs to be added as a function.
+
+**INSERT SCREENSHOT**
+
+The required schema is below, paste this directly into the schema box.
 
 ```JSON
 {
@@ -143,16 +158,46 @@ Now add a Parse JSON action, we'll use this action to parse the output of our pr
 
     ]
   }
-dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 }
 ```
 
-d
-d
-d
-d
-d
-d
-d
-d
-d
+Now add a select with the below values. This select isolates just the id value from the output of 'parse-get-group-members-output'.
+
+|                    |                    |
+|--------------------|--------------------|
+|**Name:**                | select-id     |
+|**From:**                | *body('parse-get-group-members')* |
+|**Map Key:**             | Leave this blank   |
+|**Map value:**           | *item()?['id']*      |
+
+**INSERT SCREENSHOT**
+
+> Don't forget to add them as functions, you'll know when you haven't as it'll show as plain text rather than an object like it displays in the screenshot above.
+
+Now add a 'Get blob content (V2) action. Below are the required parameters:
+
+|                    |                    |
+|--------------------|--------------------|
+|**Name:**           | get-previous-members |
+|**Storage account:**                | NAME-OF-YOUR-STORAGE-ACCOUNT     |
+|**Blob:**                | NAME-OF-YOUR-JSON-FILE-CREATED-EARLIER.json |
+|**Infer Content Type:**             | Yes   |
+|**Authentication:**           | System-assigned managed identity      |
+
+Now add another Parse JSON action with the below parameters:
+
+|                    |                    |
+|--------------------|--------------------|
+|**Name:**           | parse-previous-members |
+|**Content:**                | *string(body('get-previous-members))*     |
+|**Blob:**                | NAME-OF-YOUR-JSON-FILE-CREATED-EARLIER.json |
+|**Schema:**         | Copy the same schema we used in 'parse-get-grou-members' |
+
+Now add another 'Select'. This select is isolating just the ID values from the JSON file.
+
+|                    |                    |
+|--------------------|--------------------|
+|**Name:**                | select-previous-id     |
+|**From:**                | *body('parse-previous-members')* |
+|**Map Key:**             | Leave this blank   |
+|**Map value:**           | *item()?['id']*      |
