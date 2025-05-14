@@ -1,8 +1,0 @@
-baseURL = 'https://blog.headinthecloud.uk'
-languageCode = 'en-uk'
-title = 'Head In The Cloud'
-theme = 'm10c'
-
-[caches]
-  [caches.images]
-    dir = ':cacheDir/images'
