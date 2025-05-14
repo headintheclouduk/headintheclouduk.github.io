@@ -1,28 +1,51 @@
-pre {
-    background: #2d2d2d;
-    color: #f8f8f2;
-    padding: 1rem;
-    overflow-x: auto;
-    border-radius: 8px;
-    position: relative;
-    font-size: 0.9rem;
-  }
-  
-  .copy-button {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background: #444;
-    color: white;
-    border: none;
-    padding: 0.3rem 0.6rem;
-    cursor: pointer;
-    font-size: 0.75rem;
-    border-radius: 4px;
-    opacity: 0.6;
-  }
-  
-  .copy-button:hover {
-    opacity: 1;
-  }
-  
+.code-block-wrapper {
+  margin-bottom: 2rem;
+}
+
+.code-container {
+  position: relative;
+}
+
+.code-container pre {
+  background: #2d2d2d;
+  color: #f8f8f2;
+  padding: 1rem;
+  overflow-x: auto;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  position: relative;
+}
+
+/* Sticky area inside the code block */
+.copy-sticky-wrapper {
+  position: sticky;
+  top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 2;
+  margin-bottom: -2rem; /* prevents spacing shift */
+  padding-right: 1rem;
+}
+
+/* The button itself */
+.copy-button {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  border-radius: 6px;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.copy-button:hover {
+  opacity: 1;
+  background: #666;
+  transform: scale(1.1);
+}
