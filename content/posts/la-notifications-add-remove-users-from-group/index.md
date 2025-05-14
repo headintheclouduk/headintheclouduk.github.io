@@ -94,7 +94,7 @@ Now add a Parse JSON action, we'll use this action to parse the output of our pr
 |--------------------|--------------------|
 |**Content:**        | body('get-group-members')?['value'] |
 
-```{
+<pre>{
 
   "type": "array",
 
@@ -141,7 +141,6 @@ Now add a Parse JSON action, we'll use this action to parse the output of our pr
       "userPrincipalName"
 
     ]
-
   }
 
-}```
+}</pre>

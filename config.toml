@@ -11,3 +11,7 @@ theme = 'm10c'
   [markup.highlight]
     noClasses = false  # Needed to style with CSS
     style = "monokai"  # or any Chroma style
+    guessSyntax = true # fall back to auto-detection if no language is set
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
