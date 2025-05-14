@@ -1,0 +1,31 @@
+pre {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 1rem;
+    overflow-x: auto;
+    border-radius: 8px;
+    position: relative;
+    font-size: 0.9rem;
+}
+
+code {
+    white-space: pre;
+}
+
+.copy-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: #444;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    opacity: 0.6;
+}
+
+.copy-button:hover {
+    opacity: 1;
+}
